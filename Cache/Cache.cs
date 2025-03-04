@@ -40,13 +40,11 @@ public class Cache(
             );
             var keys = new List<RedisKey>();
 
-            // Use SCAN to find keys with the specified prefix
             await foreach (var key in server.KeysAsync(pattern: $"{prefix}*"))
             {
                 keys.Add(key);
             }
 
-            // Fetch values for the keys
             var values = await _cache.StringGetAsync(keys.ToArray());
             foreach (var value in values)
             {
@@ -73,13 +71,11 @@ public class Cache(
             );
             var keys = new List<RedisKey>();
 
-            // Use SCAN to find keys with the specified prefix
             await foreach (var key in server.KeysAsync(pattern: $"{prefix}*"))
             {
                 keys.Add(key);
             }
 
-            // Fetch values for the keys
             var values = await _cache.StringGetAsync(keys.ToArray());
             for (int i = 0; i < values.Count(); i++)
             {
@@ -103,7 +99,6 @@ public class Cache(
         );
         var keys = new List<RedisKey>();
 
-        // Use SCAN to find keys with the specified prefix
         var responseList = new List<string>();
         await foreach (var key in server.KeysAsync(pattern: $"{prefix}*"))
         {
