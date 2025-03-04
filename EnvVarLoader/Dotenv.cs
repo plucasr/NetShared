@@ -1,19 +1,12 @@
 namespace Shared.EnvVarLoader;
 
-public class DotEnvLoader
+public class DotEnvLoader(string path, string[]? args = null)
 {
-    private string FilePath { get; }
-    private string[] Args { get; }
+    private string FilePath { get; } = path;
+    private string[] Args { get; } = args ?? new string[] { };
 
-    private bool IsCloud { get; }
+    private bool IsCloud { get; } = Env.IsCloud();
     private readonly EnvTools _envTools = new();
-
-    public DotEnvLoader(string path, string[]? args = null)
-    {
-        FilePath = path;
-        Args = args ?? new string[] { };
-        IsCloud = Env.IsCloud();
-    }
 
     public void Init()
     {
