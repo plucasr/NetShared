@@ -4,18 +4,16 @@ using ILogger = Shared.Logger.IAppSerilogLogger;
 
 namespace Shared;
 
-public class Cache : ICache
+public class Cache(
+    IDatabase cache,
+    ILogger logger,
+    IConnectionMultiplexer redisConnectionMultiplexer
+) : ICache
 {
-    private readonly IDatabase _cache;
-    private readonly IConnectionMultiplexer _redisConnectionMultiplexer;
-    private readonly ILogger _logger;
-
-    public Cache(IDatabase cache, ILogger logger, IConnectionMultiplexer redisConnectionMultiplexer)
-    {
-        _logger = logger;
-        _cache = cache;
-        _redisConnectionMultiplexer = redisConnectionMultiplexer;
-    }
+    private readonly IDatabase _cache = cache;
+    private readonly IConnectionMultiplexer _redisConnectionMultiplexer =
+        redisConnectionMultiplexer;
+    private readonly ILogger _logger = logger;
 
     public async Task<List<string>> GetKeysByPrefix(string prefix)
     {
