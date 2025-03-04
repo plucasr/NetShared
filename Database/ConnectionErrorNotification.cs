@@ -1,13 +1,8 @@
 namespace Shared.Database;
 
-public class ConnectionErrorNotification
+public class ConnectionErrorNotification(Action<string, string?, string?> notifyError)
 {
-    private readonly Action<string, string?, string?> _notifyError;
-
-    public ConnectionErrorNotification(Action<string, string?, string?> notifyError)
-    {
-        _notifyError = notifyError;
-    }
+    private readonly Action<string, string?, string?> _notifyError = notifyError;
 
     public void Notify(string message, string? stackTrace, string? logType)
     {
